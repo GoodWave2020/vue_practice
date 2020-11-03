@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <!-- Vue.js呼び出し -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="index.css">
+    <!-- html内容 -->
+    <div id='app'>
+      <p>{{message}}</p>
+      <p>{{name}}</p>
+      <p>{{myData}}</p>
+      <hello></hello>
+      <hello></hello>
+      <button @click="message = 'ボタンによって変更されました' " >変更</button>
+    </div>
+
+    <div id='app2'></div>
+    <div id='app3'></div>
+    <div id="app4">
+      <h1>こんにちは{{name}}</h1>
+    </div>
+    <!-- js内容 -->
+    <script>
+      var data = {
+        message: 'こんにちは',
+        name: 'たけし'
+      }
+
+      Vue.component('hello', {
+        template: '<p>こんにちは</p>'
+      });
+
+      var vm = new Vue({
+        data: data,
+        computed: {
+          myData: function() {
+            return this.$data;
+          }
+        }
+      })
+
+      vm.$mount('#app')
+
+      new Vue({
+        data: {
+          name: 'たけし',
+        },
+        template: '<h1>こんにちは, {{name}}</h1>'
+      }).$mount('#app2')
+
+      new Vue({
+        data: {
+          name: 'たけし',
+        },
+        render: function(createElement) {
+          return createElement('h1', 'こんにちは' + this.name)
+        }
+      }).$mount('#app3')
+    </script>
+  </body>
+</html>
